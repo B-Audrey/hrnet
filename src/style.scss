@@ -1,0 +1,47 @@
+:root {
+  --main-dark-color: #535a47;
+  --main-light-color: #8e9a80;
+  --main-theme-color: #cf9234;
+  --bloc-background-color: #fbfbfb;
+  --light-text-color: #bcb1a2;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 2em;
+}
+
+h1,
+h2 {
+  color: var(--main-theme-color);
+}
+
+a {
+  color: var(--main-light-color);
+}
+
+button {
+  background-color: var(--main-light-color);
+  border: 1px solid var(--main-dark-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+span,
+p {
+  color: var(--main-dark-color);
+}
+
+input,
+select {
+  width: 100%;
+  height: 2em;
+  border: 2px solid var(--main-dark-color);
+  border-radius: 2px;
+}
+
+input:focus {
+  outline: 3px solid var(--main-theme-color);
+  border: none;
+}
