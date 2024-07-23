@@ -1,0 +1,71 @@
+#modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease; /* Add transition effect */
+}
+
+#modalBackground.show {
+  opacity: 1; /* Show modal */
+  transition: opacity 0.5s ease; /* Add transition effect */
+}
+
+#modalBackground.hide {
+  opacity: 0; /* Hide modal */
+}
+
+.modal__foreground {
+  background: white;
+  padding: 2em;
+  border-radius: 10px;
+  min-width: 25vw;
+}
+
+.modal__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalTitle {
+  font-size: 1.5em;
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+
+.modal__content {
+  margin-bottom: 20px;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+}
+
+.modal__actions button {
+  cursor: pointer;
+}
+
+#cancelModal {
+  background-color: rgba(236, 111, 102, 0.76);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+#confirmModal {
+  background-color: rgba(154, 193, 157, 0.76);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

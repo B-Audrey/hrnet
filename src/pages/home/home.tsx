@@ -1,47 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './home.scss';
-import {Modal} from 'modal-lib';
-import 'modal-lib/style.css';
 import Select from '../../shared/component/select/select.tsx';
 import {departmentList, states} from '../../shared/variables.ts';
 import {NavLink} from 'react-router-dom';
-import useEmployeeService from '../../shared/service/use-employee-service.tsx'; //TODO voir avec Lucien pourquoi il faut importer manuellement !!!!
+import useEmployeeService from '../../shared/service/use-employee-service.tsx';
+import {Employee} from '../../shared/interface/employee.ts';
+import Dialog from '../../shared/component/dialog/dialog.tsx';
+import {createPortal} from 'react-dom';
+import useEscapeKeyDown from '../../shared/hook/useEscapeKeyDown.ts';
+import {DatePicker} from 'lib';
+import 'lib/style.css';
 
 export default function Home() {
     const modalContent = {
-        title: 'Hello',
-        content: 'This is a modal',
+        title: 'Employé ajouté',
+        content: 'Je dois mettre le bon texte ici',
     };
+
+    const formRef = useRef<HTMLFormElement>(null); // va contenir la ref du formulaire
+    let employeeToSend = {} as Employee
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [applyModalFn, setApplyModalFn] = useState(false);
-    const [currentDepartment, setCurrentDepartment] = useState('');
-    const [currentState, setCurrentState] = useState('');
-    const [form, setForm] = useState({
-        firstName: '',
-        lastName: '',
-        dateOfBirth: '',
-        startDate: '',
-        street: '',
-        city: '',
-        state: '',
-        zipCode: 0,
-        department: '',
-    });
 
     const {addEmployee} = useEmployeeService();
 
-    useEffect(() => {
-        setForm(prevForm => ({...prevForm, state: currentState}));
-    }, [currentState]);
-
-    useEffect(() => {
-        setForm(prevForm => ({...prevForm, department: currentDepartment}));
-    }, [currentDepartment]);
-
-    useEffect(() => {
-        console.log(form);
-    }, [form]);
+    useEscapeKeyDown(setIsModalOpen);
 
     useEffect(() => {
         if (applyModalFn) {
@@ -51,15 +35,19 @@ export default function Home() {
         }
     }, [applyModalFn]);
 
-
     const modalFn = () => {
-        console.log('ma fn a appliquer est appelée depuis mon front');
+        console.log('ma fn a appliquer est appelée depuis mon front pour ajouter un employé');
+        addEmployee(employeeToSend);
     };
-
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        addEmployee(form);
+        let formData = new FormData(formRef.current!)
+        for (let [name, value] of formData) {
+            employeeToSend = {...employeeToSend, [name]: value}
+        }
+        console.log(employeeToSend);
+        setIsModalOpen(true);
     }
 
     return (
@@ -68,71 +56,84 @@ export default function Home() {
             <div className={'container'}>
                 {/*<button onClick={() => setIsModalOpen(true)}>Open modal</button>*/}
                 <h2>Create Employee</h2>
-                <form onSubmit={handleSubmit} id="create-employee" className={'form'}>
+                <form onSubmit={handleSubmit} ref={formRef} id="create-employee" className={'form'}>
                     <label htmlFor="first-name">First Name</label>
                     <input
                         required
                         type="text"
                         id="first-name"
-                        onChange={e => setForm(prevForm => ({...prevForm, firstName: e.target.value}))}
+                        name={'first-name'}
                     />
 
                     <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" required
+                    <input
+                        type="text"
+                        id="last-name"
+                        required
+                        name={'last-name'}
+                    />
 
-                           onChange={e => setForm(prevForm => ({...prevForm, lastName: e.target.value}))}/>
+                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'rgba(207,146,52,0.43)'}
+                                textColor={'#000'} labelText={'Date of Birth'} inputName={'date-of-birth'}
+                                isRequired={true} returnFormat={'zuluDate'}/>
 
-                    <label htmlFor="date-of-birth">Date of Birth</label>
-                    <input id="date-of-birth" type="date" required
-                           onChange={e => setForm(prevForm => ({...prevForm, dateOfBirth: e.target.value}))}/>
-
-                    <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" type="date" required
-                           onChange={e => setForm(prevForm => ({...prevForm, startDate: e.target.value}))}/>
+                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'rgba(207,146,52,0.43)'}
+                                textColor={'#000'} labelText={'Start Date'} inputName={'start-date'}
+                                isRequired={true} returnFormat={'zuluDate'}/>
 
                     <fieldset className="address">
                         <legend>Address</legend>
 
                         <label htmlFor="street">Street</label>
-                        <input id="street" type="text" required
-                               onChange={e => setForm(prevForm => ({...prevForm, street: e.target.value}))}/>
+                        <input
+                            id="street"
+                            type="text"
+                            required
+                            name={'street'}
+                        />
 
                         <label htmlFor="city">City</label>
-                        <input id="city" type="text" required
-                               onChange={e => setForm(prevForm => ({...prevForm, city: e.target.value}))}/>
+                        <input
+                            id="city"
+                            type="text"
+                            required
+                            name={'city'}
+                        />
 
                         <Select
                             label={'State'}
                             valueName={'state'}
                             itemList={states.map(state => state.name)}
-                            item={currentState}
-                            setItem={setCurrentState}
                         />
 
                         <label htmlFor="zip-code">Zip Code</label>
-                        <input id="zip-code" type="number" required
-                               onChange={e => setForm(prevForm => ({...prevForm, zipCode: parseInt(e.target.value)}))}/>
+                        <input
+                            name={'zip-code'}
+                            id="zip-code"
+                            type="number"
+                            required
+                        />
                     </fieldset>
 
                     <Select
                         label={'Department'}
                         valueName={'department'}
                         itemList={departmentList}
-                        item={currentDepartment}
-                        setItem={setCurrentDepartment}
                     />
                     <button className={'save-button'}>Save</button>
                 </form>
+
+
             </div>
-            {isModalOpen ? (
-                <Modal
+            {isModalOpen && createPortal(
+                <Dialog
                     modalContent={modalContent}
                     isCancelButton={true}
                     isConfirmButton={true}
                     setFnState={setApplyModalFn}
                     setIsModalOpen={setIsModalOpen}
                 />
-            ) : null}
+                , document.body)}
         </>
     );
 }
