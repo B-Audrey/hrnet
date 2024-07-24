@@ -22,7 +22,8 @@ export default function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [applyModalFn, setApplyModalFn] = useState(false);
-
+    const stateSelectRef = useRef<{ getValue: () => string }>(null); // need to use local ref to use custom select
+    const departmentSelectRef = useRef<{ getValue: () => string }>(null); // need to use local ref ti use custom select
     const {addEmployee} = useEmployeeService();
 
     useEscapeKeyDown(setIsModalOpen);
@@ -43,8 +44,16 @@ export default function Home() {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         let formData = new FormData(formRef.current!)
+        console.log(...formData);
         for (let [name, value] of formData) {
             employeeToSend = {...employeeToSend, [name]: value}
+        }
+        // Récupérer les valeurs sélectionnées des composants Select
+        if (stateSelectRef.current) {
+            employeeToSend = {...employeeToSend, state: stateSelectRef.current.getValue()};
+        }
+        if (departmentSelectRef.current) {
+            employeeToSend = {...employeeToSend, department: departmentSelectRef.current.getValue()};
         }
         console.log(employeeToSend);
         setIsModalOpen(true);
@@ -73,11 +82,11 @@ export default function Home() {
                         name={'last-name'}
                     />
 
-                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'rgba(207,146,52,0.43)'}
+                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'#f4d6ab'}
                                 textColor={'#000'} labelText={'Date of Birth'} inputName={'date-of-birth'}
                                 isRequired={true} returnFormat={'zuluDate'}/>
 
-                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'rgba(207,146,52,0.43)'}
+                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'#f4d6ab'}
                                 textColor={'#000'} labelText={'Start Date'} inputName={'start-date'}
                                 isRequired={true} returnFormat={'zuluDate'}/>
 
@@ -102,7 +111,7 @@ export default function Home() {
 
                         <Select
                             label={'State'}
-                            valueName={'state'}
+                            ref={stateSelectRef}
                             itemList={states.map(state => state.name)}
                         />
 
@@ -117,7 +126,7 @@ export default function Home() {
 
                     <Select
                         label={'Department'}
-                        valueName={'department'}
+                        ref={departmentSelectRef}
                         itemList={departmentList}
                     />
                     <button className={'save-button'}>Save</button>
