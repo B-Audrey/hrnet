@@ -5,11 +5,6 @@
   justify-content: center;
 }
 
-label {
-  display: block;
-  margin: 1rem 0;
-}
-
 .address {
   margin-top: 1em;
 }
@@ -17,14 +12,43 @@ label {
 .form {
   display: flex;
   flex-direction: column;
-  width: 40vw;
+  width: 80vw;
+  @media (min-width: 768px) {
+    width: 70vw;
+  }
+  @media (min-width: 1024px) {
+    width: 60vw;
+  }
+  @media (min-width: 1400px) {
+    width: 40vw;
+  }
 }
 
 .save-button {
-  margin: 2em;
+  border: 1px solid var(--main-dark-color);
+  background-color: var(--main-light-color);
+  cursor: pointer;
+  margin: 2em auto 0;
+  width: 50%;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: lightgrey;
+  }
+}
+.input-error {
+  margin: 0;
+  text-align: center;
 }
 
 a {
   display: block;
   text-align: center;
+}
+
+fieldset {
+  border-color: var(--main-theme-color);
+  & legend {
+    color: var(--main-dark-color);
+  }
 }

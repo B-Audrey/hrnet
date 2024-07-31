@@ -1,15 +1,17 @@
 :root {
   --main-dark-color: #535a47;
-  --main-light-color: #8e9a80;
+  --main-light-color: #a4af98;
   --main-theme-color: #c88d23;
   --bloc-background-color: #fbfbfb;
   --light-background-color: #f4d6ab;
   --light-text-color: #bcb1a2;
+  --error-color: #8e1200;
 }
 
 body {
   margin: 0;
   padding-bottom: 2em;
+  font-family: 'Raleway', sans-serif;
 }
 
 h1,
@@ -32,17 +34,59 @@ button {
 span,
 p {
   color: var(--main-dark-color);
+  font-weight: 500;
+  font-size: 1em;
 }
 
 input,
 select {
+  box-sizing: border-box;
   width: 100%;
-  height: 2em;
   border: 2px solid var(--main-dark-color);
   border-radius: 2px;
 }
 
+.labels {
+  padding: 0 5px;
+  margin-left: 10px;
+  position: relative;
+  top: 10px;
+  font-weight: 400;
+  font-size: 0.9em;
+  background-color: var(--bloc-background-color);
+  color: var(--main-dark-color);
+}
+
 input:focus {
-  outline: 3px solid var(--main-theme-color);
+  outline: 2px solid var(--main-theme-color);
   border: none;
 }
+
+.input-content {
+  padding: 15px 10px 10px 15px;
+}
+
+.input-container {
+  margin: 1em 0;
+  box-sizing: border-box;
+  height: 4em;
+}
+
+//////// DATE PICKER STYLE
+.date-picker input {
+  padding: 15px 10px 10px 15px;
+  z-index: -1;
+}
+
+.date-picker label {
+  padding: 0 5px;
+  margin-left: 10px;
+  position: relative;
+  top: 10px;
+  font-weight: 400;
+  font-size: 0.9em;
+  background-color: var(--bloc-background-color);
+  color: var(--main-dark-color);
+}
+
+/////////////////

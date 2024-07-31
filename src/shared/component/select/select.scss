@@ -3,14 +3,11 @@
   width: 100%;
 }
 
-.select-label {
-  margin-bottom: 8px;
-}
-
 .select-container {
   position: relative;
+  z-index: -1;
   width: 100%;
-  border: 2px solid black;
+  border: 2px solid var(--main-dark-color);
   border-radius: 2px;
   cursor: pointer;
   background-color: var(--bloc-background-color);
@@ -21,7 +18,6 @@
   border: none;
 }
 
-
 .select-selected {
   padding: 10px;
   display: flex;
@@ -31,7 +27,7 @@
 
 .chevron {
   transition: transform 300ms ease-in;
-  height: 20px;
+  height: 15px;
 }
 
 .chevron--open {
@@ -51,18 +47,24 @@
   box-shadow: black 0 0 5px;
   z-index: 1000;
   transform-origin: top;
-  transition: max-height 500ms, transform 500ms;
+  transition:
+    max-height 500ms,
+    transform 500ms;
 }
 
 .select-options--open {
   max-height: 200px;
-  transition: max-height 500ms, transform 500ms;
+  transition:
+    max-height 500ms,
+    transform 500ms;
   overflow-y: auto;
 }
 
 .select-options--close {
   max-height: 0;
-  transition: max-height 500ms, transform 500ms;
+  transition:
+    max-height 500ms,
+    transform 500ms;
   overflow-y: hidden;
 }
 
@@ -79,7 +81,6 @@
   background-color: var(--main-light-color);
 }
 
-
 #overlay {
   position: fixed;
   top: 0;
@@ -88,7 +89,6 @@
   height: 100vh;
   z-index: 500;
 }
-
 
 .select-option.highlighted {
   background-color: var(--main-light-color);

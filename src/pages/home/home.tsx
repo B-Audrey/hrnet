@@ -1,15 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react';
+import 'french-date-picker/style.css'
 import './home.scss';
+import React, {useEffect, useRef, useState} from 'react';
 import Select from '../../shared/component/select/select.tsx';
 import {departmentList, states} from '../../shared/variables.ts';
 import {NavLink} from 'react-router-dom';
 import useEmployeeService from '../../shared/service/use-employee-service.tsx';
-import {Employee} from '../../shared/interface/employee.ts';
+import {Employee} from '../../shared/interface/employee.interface.ts';
 import Dialog from '../../shared/component/dialog/dialog.tsx';
 import {createPortal} from 'react-dom';
 import useEscapeKeyDown from '../../shared/hook/useEscapeKeyDown.ts';
-import {DatePicker} from 'lib';
-import 'lib/style.css';
+import isStringValid, {StringValidatorRules} from '../../shared/utils/stringValidator.ts';
+import Input from '../../shared/component/input/input.tsx';
+import {DatePicker} from 'french-date-picker';
 
 export default function Home() {
     const modalContent = {
@@ -18,12 +20,13 @@ export default function Home() {
     };
 
     const formRef = useRef<HTMLFormElement>(null); // va contenir la ref du formulaire
-    let employeeToSend = {} as Employee
+    let employeeToSend = {} as Employee;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [applyModalFn, setApplyModalFn] = useState(false);
-    const stateSelectRef = useRef<{ getValue: () => string }>(null); // need to use local ref to use custom select
+    const stateSelectRef = useRef<{ getValue: () => string }>(null); // need to use a local ref to use custom select
     const departmentSelectRef = useRef<{ getValue: () => string }>(null); // need to use local ref ti use custom select
+    const [isFormValid, setIsFormValid] = useState({isValid: false, message: ''});
     const {addEmployee} = useEmployeeService();
 
     useEscapeKeyDown(setIsModalOpen);
@@ -43,106 +46,171 @@ export default function Home() {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        let formData = new FormData(formRef.current!)
+        setIsFormValid({isValid: true, message: ''});
+        let formData = new FormData(formRef.current!);
         console.log(...formData);
         for (let [name, value] of formData) {
-            employeeToSend = {...employeeToSend, [name]: value}
+            if (!value) {
+                return setIsFormValid({isValid: false, message: 'All form fields must be completed'});
+            }
+            const isValid = isStringValid(value.toString(), [StringValidatorRules.noSpecialChars, StringValidatorRules.hasNotOnlySpaces, StringValidatorRules.notTooLong]);
+            if (!isValid.isValid) {
+                return setIsFormValid({isValid: false, message: `Form field ${name} is in error : ${isValid.message}`});
+            }
+            employeeToSend = {...employeeToSend, [name]: value};
         }
         // Récupérer les valeurs sélectionnées des composants Select
         if (stateSelectRef.current) {
-            employeeToSend = {...employeeToSend, state: stateSelectRef.current.getValue()};
+            const value = stateSelectRef.current.getValue();
+            if (!value) {
+                const isValid = isStringValid(value, [StringValidatorRules.notEmpty]);
+                if (!isValid.isValid) {
+                    return setIsFormValid({isValid: false, message: 'All form fields must be completed : State is missing'});
+                }
+                employeeToSend = {...employeeToSend, state: value};
+            }
+            if (departmentSelectRef.current) {
+                const value = stateSelectRef.current.getValue();
+                if (!value) {
+                    const isValid = isStringValid(value, [StringValidatorRules.notEmpty]);
+                    if (!isValid.isValid) {
+                        return setIsFormValid({isValid: false, message: 'All form fields must be completed'});
+                    }
+                }
+                employeeToSend = {...employeeToSend, department: departmentSelectRef.current.getValue()};
+            } else {
+                return setIsFormValid({isValid: false, message: 'All form fields must be completed : Department is missing'});
+            }
+            console.log(employeeToSend);
+            setIsModalOpen(true);
         }
-        if (departmentSelectRef.current) {
-            employeeToSend = {...employeeToSend, department: departmentSelectRef.current.getValue()};
-        }
-        console.log(employeeToSend);
-        setIsModalOpen(true);
     }
+
 
     return (
         <>
             <NavLink to={'/employees'}>View Current Employees</NavLink>
             <div className={'container'}>
-                {/*<button onClick={() => setIsModalOpen(true)}>Open modal</button>*/}
                 <h2>Create Employee</h2>
-                <form onSubmit={handleSubmit} ref={formRef} id="create-employee" className={'form'}>
-                    <label htmlFor="first-name">First Name</label>
-                    <input
-                        required
-                        type="text"
-                        id="first-name"
-                        name={'first-name'}
+                <form onSubmit={handleSubmit} ref={formRef} id="create-employee" className={'form'}
+                      onChange={(e) => console.log(e)}>
+
+                    <fieldset className="address">
+                        <legend>Identity</legend>
+                        <Input
+                            label={'First Name'}
+                            name={'first-name'}
+                            id={'firstName'}
+                            validatorOptions={[
+                                StringValidatorRules.notTooLong,
+                                StringValidatorRules.noSpecialChars,
+                                StringValidatorRules.hasNotOnlySpaces,
+                            ]}
+                            type={'text'}
+                            isRequired={true}
+                        />
+
+                        <Input
+                            label={'Last Name'}
+                            name={'last-name'}
+                            id={'lastName'}
+                            validatorOptions={[
+                                StringValidatorRules.notTooLong,
+                                StringValidatorRules.noSpecialChars,
+                                StringValidatorRules.hasNotOnlySpaces,
+                            ]}
+                            type={'text'}
+                            isRequired={true}
+                        />
+
+                        <DatePicker
+                            mainColor={'rgb(142,154,128)'}
+                            backgroundColor={'#f4d6ab'}
+                            textColor={'#000'}
+                            labelText={'Date of Birth'}
+                            inputName={'date-of-birth'}
+                            isRequired={true}
+                            returnFormat='zuluString'
+                        />
+                    </fieldset>
+
+                    <DatePicker
+                        mainColor={'rgb(142,154,128)'}
+                        backgroundColor={'#f4d6ab'}
+                        textColor={'#000'}
+                        labelText={'Start Date'}
+                        inputName={'start-date'}
+                        isRequired={true}
+                        returnFormat='zuluString'
                     />
-
-                    <label htmlFor="last-name">Last Name</label>
-                    <input
-                        type="text"
-                        id="last-name"
-                        required
-                        name={'last-name'}
-                    />
-
-                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'#f4d6ab'}
-                                textColor={'#000'} labelText={'Date of Birth'} inputName={'date-of-birth'}
-                                isRequired={true} returnFormat={'zuluDate'}/>
-
-                    <DatePicker mainColor={"rgb(142,154,128)"} backgroundColor={'#f4d6ab'}
-                                textColor={'#000'} labelText={'Start Date'} inputName={'start-date'}
-                                isRequired={true} returnFormat={'zuluDate'}/>
 
                     <fieldset className="address">
                         <legend>Address</legend>
 
-                        <label htmlFor="street">Street</label>
-                        <input
-                            id="street"
-                            type="text"
-                            required
+                        <Input
+                            label={'Street'}
                             name={'street'}
+                            id={'street'}
+                            validatorOptions={[
+                                StringValidatorRules.notTooLong,
+                                StringValidatorRules.noSpecialChars,
+                                StringValidatorRules.hasNotOnlySpaces,
+                            ]}
+                            type={'text'}
+                            isRequired={true}
                         />
 
-                        <label htmlFor="city">City</label>
-                        <input
-                            id="city"
-                            type="text"
-                            required
+                        <Input
+                            label={'City'}
                             name={'city'}
+                            id={'city'}
+                            validatorOptions={[
+                                StringValidatorRules.notTooLong,
+                                StringValidatorRules.noSpecialChars,
+                                StringValidatorRules.hasNotOnlySpaces,
+                            ]}
+                            type={'text'}
+                            isRequired={true}
                         />
 
-                        <Select
-                            label={'State'}
-                            ref={stateSelectRef}
-                            itemList={states.map(state => state.name)}
-                        />
+                        <Select label={'State'} ref={stateSelectRef} itemList={states.map(state => state.name)}/>
 
-                        <label htmlFor="zip-code">Zip Code</label>
-                        <input
+                        <Input
+                            label={'Zip Code'}
                             name={'zip-code'}
-                            id="zip-code"
-                            type="number"
-                            required
+                            id={'zipCode'}
+                            validatorOptions={[
+                                StringValidatorRules.notEmpty,
+                                StringValidatorRules.notTooLong,
+                                StringValidatorRules.noSpecialChars,
+                                StringValidatorRules.hasNotOnlySpaces,
+                            ]}
+                            type={'number'}
+                            isRequired={true}
+                            min={0}
                         />
                     </fieldset>
 
-                    <Select
-                        label={'Department'}
-                        ref={departmentSelectRef}
-                        itemList={departmentList}
-                    />
-                    <button className={'save-button'}>Save</button>
+                    <Select label={'Department'} ref={departmentSelectRef} itemList={departmentList}/>
+                    <button className={'save-button'}>
+                        Save
+                    </button>
+                    <span className={`input-error ${!isFormValid.isValid ? 'fade-in' : ''}`}>
+                    {isFormValid.message}
+                </span>
                 </form>
-
-
             </div>
-            {isModalOpen && createPortal(
-                <Dialog
-                    modalContent={modalContent}
-                    isCancelButton={true}
-                    isConfirmButton={true}
-                    setFnState={setApplyModalFn}
-                    setIsModalOpen={setIsModalOpen}
-                />
-                , document.body)}
+            {isModalOpen &&
+                createPortal(
+                    <Dialog
+                        modalContent={modalContent}
+                        isCancelButton={true}
+                        isConfirmButton={true}
+                        setFnState={setApplyModalFn}
+                        setIsModalOpen={setIsModalOpen}
+                    />,
+                    document.body,
+                )}
         </>
     );
 }
