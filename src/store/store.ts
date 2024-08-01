@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {EmployeeModel} from './employeeModel.ts';
-import mockData from '../../mockData.json';
+import mockData from '../mockData.json';
 
 const employeeState: EmployeeModel[] = mockData as unknown as EmployeeModel[];
 

@@ -1,4 +1,4 @@
-import mockData from '../../../mockData.json';
+import mockData from '../../mockData.json';
 import {Employee} from '../interface/employee.interface.ts';
 import {FetchDataParams} from '../interface/dataParams.interface.ts';
 
