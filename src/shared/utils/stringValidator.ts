@@ -7,7 +7,7 @@ export enum StringValidatorRules {
     hasNotOnlySpaces = 'hasNotOnlySpaces'
 }
 
-const isStringValid = (value: string, rules: StringValidatorRules[]) => {
+const isStringValid = (value: string, rules?: StringValidatorRules[]) => {
     let isValidString = {isValid: true, message: ''}
 
     const messages = {
@@ -24,7 +24,7 @@ const isStringValid = (value: string, rules: StringValidatorRules[]) => {
         hasNotOnlySpaces: hasNotOnlySpaces(value)
     }
 
-    rules.forEach(rule => {
+    rules?.forEach(rule => {
         const canContinue = test[rule];
         if (!canContinue) {
             isValidString = {
