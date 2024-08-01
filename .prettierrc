@@ -1,9 +1,0 @@
-{
-  "singleQuote": true,
-  "trailingComma": "all",
-  "printWidth": 120,
-"htmlWhitespaceSensitivity": "css",
-  "arrowParens": "avoid",
-  "endOfLine": "auto",
-  "bracketSameLine": true
-}
