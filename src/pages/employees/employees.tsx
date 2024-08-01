@@ -8,7 +8,6 @@ import { Employee } from '../../shared/interface/employee.interface.ts';
 export default function Employees() {
   return (
     <>
-      <h2>Employees Works</h2>
       <Table data={mockData as unknown as Employee[]} />
 
       <NavLink to={'/'}>Go to Home</NavLink>

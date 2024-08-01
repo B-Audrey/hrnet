@@ -4,7 +4,7 @@ import {InputProps} from '../../interface/props.interface.ts';
 import isStringValid from '../../utils/stringValidator.ts';
 import {isNumberValid} from '../../utils/numberValidator.ts';
 
-const Input = ({label, name, id, type, isRequired, validatorOptions, min, max}: InputProps) => {
+const Input = ({label, name, id, type, isRequired, validatorOptions, min, max, setValue}: InputProps) => {
     const [isValueValid, setIsValueValid] = useState({isValid: true, message: ''});
 
     const errorControlBlurFn = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -31,6 +31,7 @@ const Input = ({label, name, id, type, isRequired, validatorOptions, min, max}: 
                 onBlur={(e) => errorControlBlurFn(e)}
                 min={min && min}
                 max={max && max}
+                onChange={(e) => setValue && setValue(e.target.value) }
             />
             <span className={`input-error ${!isValueValid.isValid ? 'fade-in' : ''}`}>
                     {isValueValid.message}

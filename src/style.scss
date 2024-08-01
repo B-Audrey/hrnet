@@ -73,6 +73,14 @@ input:focus {
   height: 4em;
 }
 
+fieldset {
+  border-color: var(--main-theme-color);
+  & legend {
+    color: var(--main-dark-color);
+    font-weight: bold;
+  }
+}
+
 //////// DATE PICKER STYLE
 .date-picker input {
   padding: 15px 10px 10px 15px;

@@ -9,6 +9,7 @@ export interface InputProps {
     isRequired: boolean
     min?: number,
     max?: number,
+    setValue?: any
 }
 
 export interface SelectProps {
