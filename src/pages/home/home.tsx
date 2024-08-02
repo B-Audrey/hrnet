@@ -9,9 +9,9 @@ import {Employee} from '../../shared/interface/employee.interface.ts';
 import Dialog from '../../shared/component/dialog/dialog.tsx';
 import {createPortal} from 'react-dom';
 import useEscapeKeyDown from '../../shared/hook/useEscapeKeyDown.tsx';
-import isStringValid, {StringValidatorRules} from '../../shared/utils/stringValidator.ts';
 import Input from '../../shared/component/input/input.tsx';
 import {DatePicker} from 'french-date-picker';
+import {isStringValid, StringValidatorRules} from '../../shared/utils/stringValidator.ts';
 
 export default function Home() {
     const [newEmployee, setNewEmployee] = useState<Employee>({} as Employee);
@@ -21,26 +21,39 @@ export default function Home() {
     const formRef = useRef<HTMLFormElement>(null);
     const stateSelectRef = useRef<{ getValue: () => string }>(null);
     const departmentSelectRef = useRef<{ getValue: () => string }>(null);
-    const {addEmployee} = useEmployeeStore();
 
+    const modalContent = {
+        title: 'ADD NEW EMPLOYEE',
+        content: `Are you sure you want to add you new Employee ${newEmployee?.firstName} ${newEmployee?.lastName} to the list of employees ?`,
+    };
+
+    const {addEmployee} = useEmployeeStore();
+    // Close the modal with the escape key
     useEscapeKeyDown(setIsModalOpen);
 
-    useEffect(() => {
-        if (applyModalFn) {
-            modalFn();
-            setApplyModalFn(false);
-        }
-    }, [applyModalFn]);
-
+    /**
+     * Function call to call the add Fn to add the new employee to the list of employees
+     */
     const modalFn = () => {
-        console.log('Employee to send', newEmployee);
         addEmployee(newEmployee);
     };
 
+    /**
+     * Handle the form submit
+     * prevent from natural submit
+     * suppose the form is valid
+     * get Data as formData object from the form by formRef
+     * valid the new employee values and send error if needed
+     * get values from children select with their getValue function and check them
+     * set the newEmployee with the values
+     * open the dialog modal
+     * @param event
+     */
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         setIsFormValid({isValid: true, message: ''});
         let formData = new FormData(formRef.current!);
+
         let updatedEmployee = {...newEmployee};
 
         for (let [name, value] of formData) {
@@ -55,9 +68,9 @@ export default function Home() {
         }
 
         if (stateSelectRef.current) {
-            const value = stateSelectRef.current.getValue();
-            if (!value) {
-                const isValid = isStringValid(value, [StringValidatorRules.notEmpty]);
+            const stateSelectValue = stateSelectRef.current.getValue();
+            if (!stateSelectValue) {
+                const isValid = isStringValid(stateSelectValue, [StringValidatorRules.notEmpty]);
                 if (!isValid.isValid) {
                     return setIsFormValid({
                         isValid: false,
@@ -65,7 +78,7 @@ export default function Home() {
                     });
                 }
             }
-            updatedEmployee = {...updatedEmployee, state: value};
+            updatedEmployee = {...updatedEmployee, state: stateSelectValue};
         }
 
         if (departmentSelectRef.current) {
@@ -73,24 +86,27 @@ export default function Home() {
             if (!value) {
                 const isValid = isStringValid(value, [StringValidatorRules.notEmpty]);
                 if (!isValid.isValid) {
-                    return setIsFormValid({isValid: false, message: 'All form fields must be completed'});
+                    return setIsFormValid({isValid: false, message: 'All form fields must be completed : Department is missing'});
                 }
             }
             updatedEmployee = {...updatedEmployee, department: value};
-        } else {
-            return setIsFormValid({
-                isValid: false,
-                message: 'All form fields must be completed : Department is missing'
-            });
         }
         setNewEmployee(updatedEmployee);
         setIsModalOpen(true);
     };
 
-    const modalContent = {
-        title: 'ADD NEW EMPLOYEE',
-        content: `Are you sure you want to add you new Employee ${newEmployee?.firstName} ${newEmployee?.lastName} to the list of employees ?`,
-    };
+    /**
+     * Call the modal function if the applyModalFn is true
+     */
+    useEffect(() => {
+        if (applyModalFn) {
+            modalFn();
+            setApplyModalFn(false);
+        }
+    }, [applyModalFn]);
+
+
+
 
     return (
         <>

@@ -7,10 +7,3 @@ export interface FetchDataParams {
     currentPage: number;
     rowsPerPage: number;
 }
-
-export interface DataTableProps {
-    data: Employee[];
-    order: 'asc' | 'desc';
-    orderBy: keyof Employee;
-    handleRequestSort: (propertyToOrderBy: keyof Employee) => void;
-}

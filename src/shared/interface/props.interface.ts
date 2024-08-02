@@ -1,4 +1,5 @@
 import {StringValidatorRules} from '../utils/stringValidator.ts';
+import {Employee} from './employee.interface.ts';
 
 export interface InputProps {
     label: string,
@@ -28,4 +29,11 @@ export interface DialogProps {
 export interface DialogContent {
     title: string;
     content: string;
+}
+
+export interface DataTableProps {
+    data: Employee[];
+    order: 'asc' | 'desc';
+    orderBy: keyof Employee;
+    handleRequestSort: (propertyToOrderBy: keyof Employee) => void;
 }

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 /**
  * Custom hook that listens for the Escape key down event and calls the provided close function.
- *
  * @param {Function} closeFunctionToCall - Function to call when Escape key is pressed. Takes a boolean parameter.
  */
 const useEscapeKeyDown = (closeFunctionToCall: any) => {
