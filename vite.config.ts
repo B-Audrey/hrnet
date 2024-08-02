@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import sass from 'sass'
 
 export default defineConfig({
-  base: '/',
+  base: '/hrnet',
   plugins: [react()],
   css: {
     preprocessorOptions: {
