@@ -1,4 +1,3 @@
-import 'french-date-picker/style.css'
 import './home.scss';
 import React, {useEffect, useRef, useState} from 'react';
 import Select from '../../shared/component/select/select.tsx';
