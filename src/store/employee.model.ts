@@ -10,3 +10,7 @@ export interface EmployeeModel {
     "zipCode": number,
     "department": string,
 }
+
+export interface EmployeeStateModel {
+    employees: EmployeeModel[]
+}

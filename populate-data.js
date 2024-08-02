@@ -36,7 +36,7 @@ const writeDataToFile = (data, filename) => {
     });
 }
 
-const numEntries = 500; // number of mock entries you want to generate
+const numEntries = 2000; // number of mock entries you want to generate
 const data = generateRandomData(numEntries); //generate array
 const filename = 'mockData.json'; // name of the file you want to write to
 

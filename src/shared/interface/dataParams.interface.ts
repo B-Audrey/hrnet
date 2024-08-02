@@ -13,5 +13,4 @@ export interface DataTableProps {
     order: 'asc' | 'desc';
     orderBy: keyof Employee;
     handleRequestSort: (propertyToOrderBy: keyof Employee) => void;
-    headCells: { id: keyof Employee; label: string }[];
 }
