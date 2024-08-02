@@ -7,7 +7,13 @@ export enum StringValidatorRules {
     hasNotOnlySpaces = 'hasNotOnlySpaces'
 }
 
-const isStringValid = (value: string, rules?: StringValidatorRules[]) => {
+/**
+ * Validator to check if a string is valid depending on the rules available in enum StringValidatorRules
+ * Send the appropriate message if the string is not valid
+ * @param value
+ * @param rules
+ */
+export const isStringValid = (value: string, rules?: StringValidatorRules[]) => {
     let isValidString = {isValid: true, message: ''}
 
     const messages = {
@@ -36,4 +42,3 @@ const isStringValid = (value: string, rules?: StringValidatorRules[]) => {
     return isValidString;
 };
 
-export default isStringValid;

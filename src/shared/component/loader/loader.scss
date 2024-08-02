@@ -1,0 +1,53 @@
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start ;
+  z-index: 999;
+}
+
+.loader {
+  padding : 10px;
+  display: flex;
+  gap: 15px;
+}
+
+.loader .bar {
+  width: 1px;
+  height: 50px;
+  background-color: var(--main-theme-color);
+  animation: wave 1.5s infinite ease-in-out;
+}
+
+.loader .bar:nth-child(2) {
+  animation-delay: -1.4s;
+}
+
+.loader .bar:nth-child(3) {
+  animation-delay: -1.3s;
+  background-color: var(--main-dark-color);
+}
+
+.loader .bar:nth-child(4) {
+  animation-delay: -1.2s;
+}
+
+.loader .bar:nth-child(5) {
+  animation-delay: -1.1s;
+}
+
+@keyframes wave {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+  }
+}

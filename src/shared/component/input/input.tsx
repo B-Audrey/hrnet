@@ -1,12 +1,17 @@
 import './input.scss';
 import React, {useState} from 'react';
 import {InputProps} from '../../interface/props.interface.ts';
-import isStringValid from '../../utils/stringValidator.ts';
 import {isNumberValid} from '../../utils/numberValidator.ts';
+import {isStringValid} from '../../utils/stringValidator.ts';
 
 const Input = ({label, name, id, type, isRequired, validatorOptions, min, max, setValue}: InputProps) => {
     const [isValueValid, setIsValueValid] = useState({isValid: true, message: ''});
 
+    /**
+     * Handle the blur event on the input
+     * Check if the input is valid or not to send error if needed
+     * @param e
+     */
     const errorControlBlurFn = (e: React.FocusEvent<HTMLInputElement>) => {
         if (type === 'text') {
             const isInputInError = isStringValid(e.target.value, validatorOptions!);

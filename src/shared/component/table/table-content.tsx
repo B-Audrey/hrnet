@@ -1,9 +1,10 @@
 import './table.scss';
 import React from 'react';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel} from '@mui/material';
-import {DataTableProps} from '../../interface/dataParams.interface.ts';
+import {headCells} from '../../variables.ts';
+import {DataTableProps} from '../../interface/props.interface.ts';
 
-const TableContent = ({data, order, orderBy, handleRequestSort, headCells}: DataTableProps) => {
+const TableContent = ({data, order, orderBy, handleRequestSort}: DataTableProps) => {
     return (
         <TableContainer>
             <Table>

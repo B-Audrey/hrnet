@@ -1,3 +1,17 @@
+import {Employee} from './interface/employee.interface.ts';
+
+export const headCells: { id: keyof Employee; label: string }[] = [
+    {id: 'firstName', label: 'First Name'},
+    {id: 'lastName', label: 'Last Name'},
+    {id: 'startDate', label: 'Start Date'},
+    {id: 'department', label: 'Department'},
+    {id: 'dateOfBirth', label: 'Date of Birth'},
+    {id: 'street', label: 'Street'},
+    {id: 'city', label: 'City'},
+    {id: 'state', label: 'State'},
+    {id: 'zipCode', label: 'Zip Code'},
+];
+
 export const states = [
     {
         "name": "Alabama",

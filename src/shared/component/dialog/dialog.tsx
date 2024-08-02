@@ -11,10 +11,17 @@ export default function Dialog({
 }: DialogProps) {
   const [showClass, setShowClass] = useState('');
 
+  /**
+   * Set the show class to trigger the modal animation
+   */
   useEffect(() => {
     setShowClass('show');
   }, []);
 
+  /**
+   * Handle the close button click
+   * Set the show class to hide the modal
+   */
   const handleCloseClick = () => {
     setShowClass('hide');
     setTimeout(() => {
@@ -23,6 +30,11 @@ export default function Dialog({
     }, 500); // Match the transition duration
   };
 
+  /**
+   * Handle the confirm button click
+   * Set the function state to true to call by the parent component
+   * and close the modal
+   */
   const handleConfirmFn = () => {
     setFnState(true);
     setIsModalOpen(false);
