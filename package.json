@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "predeploy": "npm run build && cp public/_redirects build/_redirects",
+    "predeploy": "npm run build && cp ./public/_redirects ./dist/_redirects",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview",
     "prettier:write": "prettier --write \"**/*.{jsx,tsx,css,scss,html}\"",
