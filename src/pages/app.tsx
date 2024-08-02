@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Header from '../shared/component/header/header.tsx';
 import WrongPage from './wrong-page/wrong-page.tsx';
