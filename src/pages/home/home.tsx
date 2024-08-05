@@ -109,7 +109,7 @@ export default function Home() {
 
     return (
         <>
-            <NavLink to={'/hrnet/employees'}>View Current Employees</NavLink>
+            <NavLink to={'/employees'}>View Current Employees</NavLink>
             <div className={'container'}>
                 <h2>Create Employee</h2>
                 <form onSubmit={handleSubmit} ref={formRef} id="create-employee" className={'form'}>

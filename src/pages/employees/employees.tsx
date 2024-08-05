@@ -8,7 +8,7 @@ export default function Employees() {
     <>
       <DataTableContainer />
 
-      <NavLink to={'/hrnet'}>Go to Home</NavLink>
+      <NavLink to={'/'}>Go to Home</NavLink>
     </>
   );
 }
