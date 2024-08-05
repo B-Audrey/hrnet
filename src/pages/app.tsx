@@ -14,9 +14,9 @@ function App() {
         <Provider store={store}>
           <Header />
           <Routes>
-            <Route path="/hrnet" element={<Home />} />
-            <Route path="/hrnet/employees" element={<Employees />} />
-            <Route path="/hrnet/error" element={<WrongPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/employees" element={<Employees />} />
+            <Route path="/error" element={<WrongPage />} />
             <Route path="*" element={<WrongPage />} />
           </Routes>
         </Provider>

@@ -8,7 +8,7 @@ export default function WrongPage() {
       <div className="wrong-page">
         <h1>404 Not Found</h1>
         <p>
-          La page demandée n'existe pas, <NavLink to="/hrnet">retournez à la page d'accueil</NavLink>
+          La page demandée n'existe pas, <NavLink to="/">retournez à la page d'accueil</NavLink>
         </p>
       </div>
     </>

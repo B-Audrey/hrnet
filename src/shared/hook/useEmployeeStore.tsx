@@ -9,8 +9,8 @@ export default function useEmployeeStore() {
   let idIncrement: number = 2000;
 
   const addEmployee = (employee: Employee) => {
-    idIncrement++
-    return store.dispatch({ type: 'ADD_EMPLOYEE', payload: {...employee, id: idIncrement} });
+    idIncrement++;
+    return store.dispatch({ type: 'ADD_EMPLOYEE', payload: { ...employee, id: idIncrement } });
   };
   return { addEmployee };
 }
