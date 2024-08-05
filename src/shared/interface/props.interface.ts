@@ -1,5 +1,6 @@
 import {StringValidatorRules} from '../utils/stringValidator.ts';
 import {Employee} from './employee.interface.ts';
+import {ReactNode} from 'react';
 
 export interface InputProps {
     label: string,
@@ -28,7 +29,7 @@ export interface DialogProps {
 
 export interface DialogContent {
     title: string;
-    content: string;
+    content: ReactNode;
 }
 
 export interface DataTableProps {

@@ -23,7 +23,7 @@ export default function Home() {
 
   const modalContent = {
     title: 'ADD NEW EMPLOYEE',
-    content: `Are you sure you want to add you new Employee ${newEmployee?.firstName} ${newEmployee?.lastName} to the list of employees ?`,
+    content: <p>Are you sure you want to add you new employee <strong>{newEmployee?.firstName} {newEmployee?.lastName}</strong> to the list of employees ?</p>,
   };
 
   const { addEmployee } = useEmployeeStore();
