@@ -18,7 +18,7 @@ const useEmployeeData = () => {
     try {
       let filteredData = fullData;
       if (params.filterToSearchOn) {
-        filteredData = getFilteredData(fullData, params.filterToSearchOn);
+        filteredData = getFilteredData(fullData, params.filterToSearchOn.trim());
       }
       filteredData = sortData(filteredData, params.order, params.orderBy);
       const start = params.currentPage * params.rowsPerPage;

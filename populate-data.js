@@ -11,12 +11,20 @@ const generateRandomData = (numEntries) => {
             id: i + 1,
             firstName: faker.person.firstName(),
             lastName: faker.person.lastName(),
-            dateOfBirth: faker.date.past({years: 50, refDate: new Date('2004-01-01')}).toISOString(),
-            startDate: faker.date.recent({days: 365}).toISOString(),
+            dateOfBirth: faker.date.past({years: 50, refDate: new Date('2004-01-01')}).toLocaleDateString({
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+            }),
+            startDate: faker.date.recent({days: 365}).toLocaleDateString({
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+            }),
             street: faker.location.streetAddress(),
             city: faker.location.city(),
             state: faker.helpers.arrayElement(states),
-            zipCode: faker.location.zipCode(),
+            zipCode: faker.number.int({min: 10001, max: 99999}),
             department: faker.helpers.arrayElement(departments)
         };
 
