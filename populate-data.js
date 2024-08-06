@@ -8,7 +8,7 @@ const generateRandomData = (numEntries) => {
     const data = [];
     for (let i = 0; i < numEntries; i++) {
         const entry = {
-            id: i + 1,
+            id: `${i}${new Date().getTime()}`,
             firstName: faker.person.firstName(),
             lastName: faker.person.lastName(),
             dateOfBirth: faker.date.past({years: 50, refDate: new Date('2004-01-01')}).toLocaleDateString({
