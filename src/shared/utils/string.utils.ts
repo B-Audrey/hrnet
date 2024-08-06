@@ -20,7 +20,7 @@ export const isNotEmpty = (str: string): boolean => {
  * @param str
  */
 export const hasNoSpecialChars = (str: string): boolean => {
-    return /^[a-zA-ZÉÈ0-9@:.\-'éèç\s]*$/.test(str);
+    return /^[a-zA-ZÉÈ0-9@:.\-'/éèç\s]*$/.test(str);
 }
 
 /**

@@ -35,6 +35,7 @@ export default function Home() {
    */
   const modalFn = () => {
     addEmployee(newEmployee);
+    formRef.current!.reset();
   };
 
   /**
@@ -152,7 +153,7 @@ export default function Home() {
               labelText={'Date of Birth'}
               inputName={'dateOfBirth'}
               isRequired={true}
-              returnFormat="zuluString"
+              returnFormat="string"
             />
           </fieldset>
 
@@ -163,7 +164,7 @@ export default function Home() {
             labelText={'Start Date'}
             inputName={'startDate'}
             isRequired={true}
-            returnFormat="zuluString"
+            returnFormat="string"
           />
 
           <fieldset className="address">
