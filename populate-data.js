@@ -25,7 +25,8 @@ const generateRandomData = (numEntries) => {
             city: faker.location.city(),
             state: faker.helpers.arrayElement(states),
             zipCode: faker.number.int({min: 10001, max: 99999}),
-            department: faker.helpers.arrayElement(departments)
+            department: faker.helpers.arrayElement(departments),
+            createdAt: (new Date().getTime().toString())
         };
 
         data.push(entry);
@@ -44,7 +45,7 @@ const writeDataToFile = (data, filename) => {
     });
 }
 
-const numEntries = 2000; // number of mock entries you want to generate
+const numEntries = 50; // number of mock entries you want to generate
 const data = generateRandomData(numEntries); //generate array
 const filename = 'mockData.json'; // name of the file you want to write to
 

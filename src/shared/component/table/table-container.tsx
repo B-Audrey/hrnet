@@ -10,8 +10,8 @@ const DataTableContainer = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [filterToSearchOn, setFilterToSearchOn] = useState<string>('');
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Employee>('id');
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [orderBy, setOrderBy] = useState<keyof Employee>('createdAt');
   const [data, setData] = useState<{ employees: Employee[]; totalCount: number }>({ employees: [], totalCount: 0 });
 
   const { getData, loading } = useEmployeeData();

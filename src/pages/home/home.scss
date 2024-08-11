@@ -28,8 +28,9 @@
   border: 1px solid var(--main-dark-color);
   background-color: var(--main-light-color);
   cursor: pointer;
-  margin: 2em auto 0;
+  margin: 3em auto;
   width: 50%;
+  font-size: 1em;
 
   &:disabled {
     cursor: not-allowed;

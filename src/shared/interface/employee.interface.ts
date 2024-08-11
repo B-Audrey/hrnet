@@ -1,5 +1,5 @@
 export interface Employee {
-    id?: number;
+    id: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;
@@ -9,4 +9,5 @@ export interface Employee {
     state: string;
     zipCode: number;
     department: string;
+    createdAt: string;
 }

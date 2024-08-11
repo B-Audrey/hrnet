@@ -35,12 +35,13 @@ export default function Home() {
      * Function call to call the add Fn to add the new employee to the list of employees
      */
     const modalFn = () => {
+        console.log(newEmployee)
         setTimeout(() => {
-            addEmployee(newEmployee);
+            addEmployee({...newEmployee});
+            formRef.current!.reset();
+            console.log('j ai fini avec ', newEmployee)
 
         }, 2000)
-        formRef.current!.reset();
-        console.log('j ai fini')
     };
 
     /**
@@ -103,6 +104,7 @@ export default function Home() {
             }
             updatedEmployee = {...updatedEmployee, department: value};
         }
+        updatedEmployee.createdAt = (new Date().getTime().toString())
         setNewEmployee({...updatedEmployee});
         setIsModalOpen(true);
     };
