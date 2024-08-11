@@ -18,7 +18,7 @@ const reducer = (currentState: any = employeeState, action: { type: string, payl
     switch (action.type) {
         case 'ADD_EMPLOYEE':
             console.log('Adding employee', action.payload);
-            return {...currentState, employees: [...currentState.employees, action.payload]};
+            return {employees: [...currentState.employees, {...action.payload}]};
         default:
             return currentState;
     }
