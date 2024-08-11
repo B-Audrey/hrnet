@@ -17,8 +17,7 @@ const employeeState: EmployeeStateModel = {employees: mockData as unknown as Emp
 const reducer = (currentState: any = employeeState, action: { type: string, payload: any }) => {
     switch (action.type) {
         case 'ADD_EMPLOYEE':
-            console.log('Adding employee', action.payload);
-            return {employees: [...currentState.employees, {...action.payload}]};
+            return {employees: [...currentState.employees, action.payload]};
         default:
             return currentState;
     }

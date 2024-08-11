@@ -2,7 +2,7 @@ import './home.scss';
 import React, {useEffect, useRef, useState} from 'react';
 import Select from '../../shared/component/select/select.tsx';
 import {departmentList, states} from '../../shared/variables.ts';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import useEmployeeStore from '../../shared/hook/useEmployeeStore.tsx';
 import {Employee} from '../../shared/interface/employee.interface.ts';
 import Dialog from '../../shared/component/dialog/dialog.tsx';
@@ -34,15 +34,13 @@ export default function Home() {
     /**
      * Function call to call the add Fn to add the new employee to the list of employees
      */
+    const navigate = useNavigate()
     const modalFn = () => {
-        console.log(newEmployee)
-        setTimeout(() => {
-            addEmployee({...newEmployee});
-            formRef.current!.reset();
-            console.log('j ai fini avec ', newEmployee)
-
-        }, 2000)
+        addEmployee({...newEmployee});
+        console.log('j ai aadEmployee avec ', newEmployee);
+        navigate('/employees')
     };
+
 
     /**
      * Handle the form submit
@@ -104,7 +102,9 @@ export default function Home() {
             }
             updatedEmployee = {...updatedEmployee, department: value};
         }
-        updatedEmployee.createdAt = (new Date().getTime().toString())
+        const uniqueValue = (new Date().getTime().toString())
+        updatedEmployee.createdAt = uniqueValue
+        updatedEmployee.id = uniqueValue
         setNewEmployee({...updatedEmployee});
         setIsModalOpen(true);
     };
