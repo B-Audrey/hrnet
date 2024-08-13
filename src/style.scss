@@ -29,6 +29,10 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  &:focus {
+    outline: 2px solid var(--main-theme-color);
+    border: none;
+  }
 }
 
 span,
@@ -58,7 +62,8 @@ select {
   color: var(--main-dark-color);
 }
 
-input:focus {
+input:focus,
+input:focus-visible {
   outline: 2px solid var(--main-theme-color);
   border: none;
 }
@@ -73,10 +78,9 @@ input:focus {
   height: 4em;
 }
 
-
-
 fieldset {
   border-color: var(--main-theme-color);
+
   & legend {
     color: var(--main-dark-color);
     font-weight: bold;

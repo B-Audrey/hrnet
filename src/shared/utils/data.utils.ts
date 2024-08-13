@@ -23,7 +23,9 @@ export const getFilteredData = (fullData: Employee[], filterToSearchOn: string) 
  * @param orderBy
  */
 export const sortData = (filteredData: Employee[], order: 'asc' | 'desc', orderBy: keyof Employee) => {
-    return filteredData.sort((a, b) => {
+    //@ts-expect-error - toSorted is not yet understood
+    return filteredData.toSorted((a, b) => { //use toSorted instead of sort to do not mutate array
+
         //if it is a string, we convert it to lowercase to make the comparison case insensitive, else value doesnt change
         const aValue = typeof a[orderBy] === 'string' ? (a[orderBy] as string).toLowerCase() : a[orderBy];
         const bValue = typeof b[orderBy] === 'string' ? (b[orderBy] as string).toLowerCase() : b[orderBy];

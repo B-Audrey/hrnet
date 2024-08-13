@@ -13,8 +13,13 @@
 }
 
 .select-container--open {
-  outline: 3px solid var(--main-theme-color);
+  outline: 2px solid var(--main-theme-color);
   border: none;
+}
+
+.select-container:focus-visible {
+  outline: 2px solid var(--main-theme-color) !important;
+  border: none !important;
 }
 
 .select-selected {

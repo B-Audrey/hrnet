@@ -16,10 +16,11 @@ const employeeState: EmployeeStateModel = {employees: mockData as unknown as Emp
  */
 const reducer = (currentState: any = employeeState, action: { type: string, payload: any }) => {
     switch (action.type) {
-        case 'ADD_EMPLOYEE':
+        case 'ADD_EMPLOYEE': {
             return {employees: [...currentState.employees, action.payload]};
+        }
         default:
-            return currentState;
+            return {...currentState};
     }
 };
 
@@ -34,7 +35,7 @@ export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
-            ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+            ignoredActions: ['persist/PERSIST'],
         }
     })
 })
