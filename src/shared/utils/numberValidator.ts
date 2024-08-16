@@ -6,15 +6,21 @@
  */
 export const isNumberValid = (value: number, min: number = 0, max: number) => {
     let isValidNumber = {isValid: true, message: ''};
-    if (min && value < min) {
+    if(!value) {
         isValidNumber = {
             isValid: false,
-            message: `Ce champ ne peut pas être inférieur à ${min}`
+            message: 'This field can not be empty'
+        }
+    }
+    if (value < min) {
+        isValidNumber = {
+            isValid: false,
+            message: `This field cannot be less than ${min}`
         }
     } else if (max && value > max) {
         isValidNumber = {
             isValid: false,
-            message: `Ce champ ne peut pas être supérieur à ${max}`
+            message: `This filed cannot be more than ${max}`
         }
     }
     return isValidNumber;

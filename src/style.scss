@@ -92,6 +92,12 @@ fieldset {
   padding: 15px 10px 10px 15px;
   z-index: -1;
 }
+.date-picker {
+  height: 5em;
+}
+.date-picker .input-error {
+  color: var(--error-color);
+}
 
 .date-picker label {
   padding: 0 5px;

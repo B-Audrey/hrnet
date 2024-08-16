@@ -163,6 +163,7 @@ export default function Home() {
               inputName={'dateOfBirth'}
               isRequired={true}
               returnFormat="string"
+              requiredMessage={"Date of Birth can't be empty"}
             />
           </fieldset>
 
@@ -174,6 +175,7 @@ export default function Home() {
             inputName={'startDate'}
             isRequired={true}
             returnFormat="string"
+            requiredMessage={"Start Date can't be empty"}
           />
 
           <fieldset className="address">
